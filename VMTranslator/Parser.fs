@@ -17,4 +17,6 @@ let Parse line =
     | ParseRegex Command.COMMENT_REGEX _ -> Command.CMD_MAP.[COMMENT_REGEX]
     | ParseRegex Command.PUSH_CONSTANT_REGEX [number; _] -> String.Format(Command.CMD_MAP.[PUSH_CONSTANT_REGEX], number)
     | ParseRegex Command.ADD_REGEX _ -> Command.CMD_MAP.[ADD_REGEX]
+    | ParseRegex Command.EQ_REGEX _ -> Command.CMD_MAP.[ADD_REGEX]
+    | ParseRegex Command.LT_REGEX _ -> Command.CMD_MAP.[LT_REGEX]
     | _ -> "ERROR"

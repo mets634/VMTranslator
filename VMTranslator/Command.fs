@@ -24,7 +24,78 @@ D=M
 A=A-1
 M=M+D
 "
+[<Literal>]
+let EQ_REGEX = @"^eq$"
 
+[<Literal>]
+let EQ_ASM = @"
+    @sp
+    A=M
+    A=A-1
+    D=M
+    A=A-1
+    @eq
+    D=M;JEQ
+    @0
+    D=A
+    @final
+    0;JMP
+(eq)
+    @-1
+    D=A
+(final)
+    @sp
+    A=M
+    M=D
+"
+[<Literal>]
+let LT_REGEX = @"^lt$"
+
+[<Literal>]
+let LT_ASM = @"
+    @sp
+    A=M
+    A=A-1
+    D=M
+    A=A-1
+    @lt
+    D=M;JLT
+    @0
+    D=A
+    @final
+    0;JMP
+(lt)
+    @-1
+    D=A
+(final)
+    @sp
+    A=M
+    M=D
+"
+[<Literal>]
+let GT_REGEX = @"^gt$"
+
+[<Literal>]
+let GT_ASM = @"
+    @sp
+    A=M
+    A=A-1
+    D=M
+    A=A-1
+    @gt
+    D=M;JGT
+    @0
+    D=A
+    @final
+    0;JMP
+(gt)
+    @-1
+    D=A
+(final)
+    @sp
+    A=M
+    M=D
+"
 
 [<Literal>]
 let COMMENT_REGEX = @"^(\s*)//*"
@@ -36,4 +107,6 @@ let CMD_MAP = Map.empty.
                 Add(EMPTY_REGEX, "").
                 Add(COMMENT_REGEX, "").
                 Add(PUSH_CONSTANT_REGEX, PUSH_CONSTANT_ASM).
-                Add(ADD_REGEX, ADD_ASM)
+                Add(ADD_REGEX, ADD_ASM).
+                Add(EQ_REGEX,EQ_ASM).
+                Add(LT_REGEX,LT_ASM)
