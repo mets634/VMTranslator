@@ -9,8 +9,9 @@ let Translate (file:string) =
     let code = 
         File.ReadAllLines(file) 
         |> Array.map(fun line -> Parser.Parse line) 
-        |> Array.filter(fun l -> l.Length > 0)
+        |> Array.filter(fun l -> l.Length > 0)  // remove empty lines
 
+    // write commands to .asm file
     let asm_name = Path.ChangeExtension(file, ".asm")
     File.WriteAllLines(asm_name, code)
 
@@ -27,5 +28,8 @@ let main argv =
     try
         GetFile argv |> Translate
     with _ as ex -> Console.WriteLine("ERROR:\n{0}", (ex.Message.ToString()))
+
+    Console.WriteLine("DONE")
+    Console.ReadKey() |> ignore
 
     0 // return an integer exit code
