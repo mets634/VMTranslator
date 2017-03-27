@@ -5,6 +5,20 @@ regular expression of the vm commands
 to their output as Hack assembly*)
 
 [<Literal>]
+let BASIC_PUSH_ASM = @"
+    @{0}
+    A=M
+    D=M
+    @{1}
+    A=D+A
+    D=M
+    @0
+    A=M
+    M=D
+    @0
+    M=M+1"
+
+[<Literal>]
 let PUSH_CONSTANT_REGEX = @"^push constant (\d+)(\s*)$"
 
 [<Literal>]
