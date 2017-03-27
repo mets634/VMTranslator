@@ -4,8 +4,7 @@ open System.IO
 open System
 open Parser
 
-
-    let prefix = @"
+let prefix = @"
         @256
         D=A
         @0

@@ -160,6 +160,14 @@ let OR_ASM = @"
     M=M|D"
 
 [<Literal>]
+let POP_REGEX = @"pop "
+
+[<Literal>]
+let POP_ASM = @"
+    "
+
+
+[<Literal>]
 let COMMENT_REGEX = @"^//*"
 
 [<Literal>]
