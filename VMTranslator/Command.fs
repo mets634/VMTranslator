@@ -25,14 +25,18 @@ M=M+D
 "
 
 [<Literal>]
+let EQ_REGEX = @"^eq$"
+
+[<Literal>]
 let EQ_ASM = @"
     @sp
     A=M
     A=A-1
     D=M
     A=A-1
+    D=D-M
     @eq
-    D=M;JEQ
+    D;JEQ
     @0
     D=A
     @final
@@ -55,8 +59,9 @@ let LT_ASM = @"
     A=A-1
     D=M
     A=A-1
+    D=D-M
     @lt
-    D=M;JLT
+    D;JLT
     @0
     D=A
     @final
@@ -79,8 +84,9 @@ let GT_ASM = @"
     A=A-1
     D=M
     A=A-1
+    D=D-M
     @gt
-    D=M;JGT
+    D;JGT
     @0
     D=A
     @final
@@ -92,6 +98,40 @@ let GT_ASM = @"
     @sp
     A=M
     M=D
+"
+[<Literal>]
+let SUB_REGEX = @"^sub$"
+
+[<Literal>]
+let SUB_ASM = @"
+    @sp
+    A=M
+    A=A-1
+    D=M
+    A=A-1
+    D=D-M
+    A=A+2
+    M=D
+"
+[<Literal>]
+let AND_REGEX = @"^and$"
+
+[<Literal>]
+let AND_ASM = @"
+"
+
+[<Literal>]
+let OR_REGEX = @"^or$"
+
+[<Literal>]
+let OR_ASM = @"
+"
+
+[<Literal>]
+let NEG_REGEX = @"^neg$"
+
+[<Literal>]
+let NEG_ASM = @"
 "
 
 [<Literal>]
@@ -106,4 +146,9 @@ let CMD_MAP = Map.empty.
                 Add(PUSH_CONSTANT_REGEX, PUSH_CONSTANT_ASM).
                 Add(ADD_REGEX, ADD_ASM).
                 Add(EQ_REGEX,EQ_ASM).
-                Add(LT_REGEX,LT_ASM)
+                Add(LT_REGEX,LT_ASM).
+                Add(GT_REGEX,GT_ASM).
+                Add(SUB_REGEX,SUB_ASM).
+                Add(AND_REGEX,AND_ASM).
+                Add(OR_REGEX,OR_ASM).
+                Add(NEG_REGEX,NEG_ASM)
