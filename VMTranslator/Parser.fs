@@ -28,3 +28,12 @@ let Parse line =
     | ParseRegex AND_REGEX _ -> MapCommand AND_REGEX
     | ParseRegex OR_REGEX _ -> MapCommand OR_REGEX
     | _ -> String.Format("ERROR: {0}", line)
+
+
+let GetSegIndex seg = 
+    match seg with
+    | "local" -> 1
+    | "argument" -> 2
+    | "this" -> 3
+    | "that" -> 4
+    | "temp" -> 5

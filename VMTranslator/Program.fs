@@ -4,6 +4,27 @@ open System.IO
 open System
 open Parser
 
+let prefix = @"
+        @256
+        D=A
+        @0
+        M=D
+        @300
+        D=A
+        @1
+        M=D
+        @400
+        D=A
+        @2
+        M=D
+        @3000
+        D=A
+        @3
+        M=D
+        @3010
+        D=A
+        @4
+        M=D"
 
 let Translate (file:string) = 
     let code = 
@@ -13,7 +34,7 @@ let Translate (file:string) =
 
     // write commands to .asm file
     let asm_name = Path.ChangeExtension(file, ".asm")
-    File.WriteAllLines(asm_name, code)
+    File.WriteAllLines(asm_name, (Array.append [|prefix|] code))
 
 let GetFile (argv:string[]) = 
     match argv.Length with

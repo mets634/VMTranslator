@@ -92,6 +92,7 @@ let EQ_ASM = @"
 (EQ_END)
     @0
     M=M+1"
+
 [<Literal>]
 let LT_REGEX = @"^lt$"
 
@@ -171,6 +172,36 @@ let OR_ASM = @"
     D=M
     A=A-1
     M=M|D"
+
+[<Literal>]
+let POP_REGEX = @"^pop "
+
+[<Literal>]
+let POP_ASM = @"
+    @0
+    M=M-1
+    A=M
+    D=M
+    @0
+    A=A+1
+    M=D
+
+    @{1}
+    D=A
+    @{0}
+    D=M+D
+    @0
+    A=A+2
+    M=D
+
+    @0
+    A=A+1
+    D=M
+    A=A+1
+    A=M
+    M=D
+    "
+
 
 [<Literal>]
 let COMMENT_REGEX = @"^//*"
