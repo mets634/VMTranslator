@@ -160,10 +160,32 @@ let OR_ASM = @"
     M=M|D"
 
 [<Literal>]
-let POP_REGEX = @"pop "
+let POP_REGEX = @"^pop "
 
 [<Literal>]
 let POP_ASM = @"
+    @0
+    M=M-1
+    A=M
+    D=M
+    @0
+    A=A+1
+    M=D
+
+    @{1}
+    D=A
+    @{0}
+    D=M+D
+    @0
+    A=A+2
+    M=D
+
+    @0
+    A=A+1
+    D=M
+    A=A+1
+    A=M
+    M=D
     "
 
 
