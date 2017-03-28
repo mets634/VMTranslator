@@ -207,14 +207,10 @@ let POP_ASM = @"
 
 
 [<Literal>]
-let COMMENT_REGEX = @"^//*"
-
-[<Literal>]
 let EMPTY_REGEX = @"^\s*$"
 
 let CMD_MAP = Map.empty.
                 Add(EMPTY_REGEX, "").
-                Add(COMMENT_REGEX, "").
                 Add(PUSH_CONSTANT_REGEX, PUSH_CONSTANT_ASM).
                 Add(ADD_REGEX, ADD_ASM).
                 Add(SUB_REGEX, SUB_ASM).
