@@ -174,7 +174,7 @@ let OR_ASM = @"
     M=M|D"
 
 [<Literal>]
-let POP_REGEX = @"^pop "
+let POP_REGEX = @"^pop (local+temp+this+that+argument) (\d+)"
 
 [<Literal>]
 let POP_ASM = @"
@@ -219,4 +219,6 @@ let CMD_MAP = Map.empty.
                 Add(EQ_REGEX,EQ_ASM).
                 Add(LT_REGEX,LT_ASM).
                 Add(GT_REGEX, GT_ASM).
-                Add(AND_REGEX, AND_ASM).Add(OR_REGEX, OR_ASM)
+                Add(AND_REGEX, AND_ASM).
+                Add(OR_REGEX, OR_ASM).
+                Add(POP_REGEX,POP_ASM)
