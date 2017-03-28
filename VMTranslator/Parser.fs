@@ -25,7 +25,6 @@ let GetSegIndex seg =
 let Parse line = 
     match line with
     | ParseRegex EMPTY_REGEX _ -> MapCommand EMPTY_REGEX
-    | ParseRegex COMMENT_REGEX _ -> MapCommand COMMENT_REGEX
     | ParseRegex PUSH_CONSTANT_REGEX [number; _] -> String.Format(MapCommand PUSH_CONSTANT_REGEX, number)
     | ParseRegex ADD_REGEX _ -> MapCommand ADD_REGEX
     | ParseRegex SUB_REGEX _ -> MapCommand SUB_REGEX

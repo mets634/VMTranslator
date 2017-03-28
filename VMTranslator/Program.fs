@@ -3,6 +3,7 @@
 open System.IO
 open System
 open Parser
+open System.Text.RegularExpressions
 
 let prefix = @"
         @256
@@ -27,9 +28,16 @@ let prefix = @"
         M=D"
 
 let Translate (file:string) = 
+    let singleLineCommentRegex = @"^//.*$"
+    let multiLineCommentRegex = @"/\*(.|[\r\n])*?\*/"
+
+    // remove comments
+    let noMultiComments = Regex.Replace ((File.ReadAllText file), multiLineCommentRegex, "")
+    let noComments = Regex.Replace (noMultiComments, singleLineCommentRegex, "", RegexOptions.Multiline)
+
     let code = 
-        File.ReadAllLines(file) 
-        |> Array.map(fun line -> Parser.Parse line) 
+        noComments.Split ("\n".ToCharArray())  // split file into lines
+        |> Array.map(fun line -> Parser.Parse line)  // parse line
         |> Array.filter(fun l -> l.Length > 0)  // remove empty lines
 
     // write commands to .asm file
