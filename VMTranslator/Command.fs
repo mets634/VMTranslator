@@ -5,6 +5,9 @@ regular expression of the vm commands
 to their output as Hack assembly*)
 
 [<Literal>]
+let BASIC_PUSH_REGEX = @"^push (local+temp+this+that+argument) (\d+)"
+
+[<Literal>]
 let BASIC_PUSH_ASM = @"
     @{0}
     A=M
@@ -221,4 +224,5 @@ let CMD_MAP = Map.empty.
                 Add(GT_REGEX, GT_ASM).
                 Add(AND_REGEX, AND_ASM).
                 Add(OR_REGEX, OR_ASM).
-                Add(POP_REGEX,POP_ASM)
+                Add(POP_REGEX,POP_ASM).
+                Add(BASIC_PUSH_REGEX,BASIC_PUSH_ASM)

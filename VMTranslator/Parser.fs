@@ -36,4 +36,5 @@ let Parse line =
     | ParseRegex AND_REGEX _ -> MapCommand AND_REGEX
     | ParseRegex OR_REGEX _ -> MapCommand OR_REGEX
     | ParseRegex POP_REGEX [seg;number;_] -> String.Format(MapCommand POP_REGEX,GetSegIndex seg,number)
+    | ParseRegex BASIC_PUSH_REGEX [seg;number;_] -> String.Format(MapCommand BASIC_PUSH_REGEX,GetSegIndex seg,number)
     | _ -> String.Format("ERROR: {0}", line)
