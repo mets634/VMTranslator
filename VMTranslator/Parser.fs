@@ -16,11 +16,13 @@ let MapCommand regex = CMD_MAP.[regex]
 
 let GetSegIndex seg = 
     match seg with
-    | "local" -> 1
-    | "argument" -> 2
-    | "this" -> 3
-    | "that" -> 4
-    | "temp" -> 5
+    | "local" -> "1"
+    | "argument" -> "2"
+    | "this" -> "3"
+    | "that" -> "4"
+    | "temp" -> "5"
+    | "static" -> "16"
+    | _ -> seg
 
 let Parse line = 
     match line with
@@ -34,6 +36,6 @@ let Parse line =
     | ParseRegex GT_REGEX _ -> MapCommand GT_REGEX
     | ParseRegex AND_REGEX _ -> MapCommand AND_REGEX
     | ParseRegex OR_REGEX _ -> MapCommand OR_REGEX
-    | ParseRegex POP_REGEX [seg;number;_] -> String.Format(MapCommand POP_REGEX,GetSegIndex seg,number)
-    | ParseRegex BASIC_PUSH_REGEX [seg;number;_] -> String.Format(MapCommand BASIC_PUSH_REGEX,GetSegIndex seg,number)
+    | ParseRegex BASIC_POP_REGEX [seg; number; _] -> String.Format(MapCommand BASIC_POP_REGEX,GetSegIndex seg,number)
+    | ParseRegex BASIC_PUSH_REGEX [seg; number; _] -> String.Format(MapCommand BASIC_PUSH_REGEX, GetSegIndex seg, number)
     | _ -> String.Format("ERROR: {0}", line)

@@ -5,7 +5,7 @@ regular expression of the vm commands
 to their output as Hack assembly*)
 
 [<Literal>]
-let BASIC_PUSH_REGEX = @"^push (local+temp+this+that+argument) (\d+)"
+let BASIC_PUSH_REGEX = @"^push (local|temp|this|that|argument|static) (\d+)(\s*)$"
 
 [<Literal>]
 let BASIC_PUSH_ASM = @"
@@ -20,6 +20,35 @@ let BASIC_PUSH_ASM = @"
     M=D
     @0
     M=M+1"
+
+[<Literal>]
+let BASIC_POP_REGEX = @"^pop (local|temp|this|that|argument|static) (\d+)(\s*)$"
+
+[<Literal>]
+let BASIC_POP_ASM = @"
+    @0
+    M=M-1
+    A=M
+    D=M
+    @0
+    A=A+1
+    M=D
+
+    @{1}
+    D=A
+    @{0}
+    D=M+D
+    @0
+    A=A+2
+    M=D
+
+    @0
+    A=A+1
+    D=M
+    A=A+1
+    A=M
+    M=D
+    "
 
 [<Literal>]
 let PUSH_CONSTANT_REGEX = @"^push constant (\d+)(\s*)$"
@@ -176,35 +205,6 @@ let OR_ASM = @"
     A=A-1
     M=M|D"
 
-[<Literal>]
-let POP_REGEX = @"^pop (local+temp+this+that+argument) (\d+)"
-
-[<Literal>]
-let POP_ASM = @"
-    @0
-    M=M-1
-    A=M
-    D=M
-    @0
-    A=A+1
-    M=D
-
-    @{1}
-    D=A
-    @{0}
-    D=M+D
-    @0
-    A=A+2
-    M=D
-
-    @0
-    A=A+1
-    D=M
-    A=A+1
-    A=M
-    M=D
-    "
-
 
 [<Literal>]
 let EMPTY_REGEX = @"^\s*$"
@@ -220,5 +220,5 @@ let CMD_MAP = Map.empty.
                 Add(GT_REGEX, GT_ASM).
                 Add(AND_REGEX, AND_ASM).
                 Add(OR_REGEX, OR_ASM).
-                Add(POP_REGEX,POP_ASM).
+                Add(BASIC_POP_REGEX,BASIC_POP_ASM).
                 Add(BASIC_PUSH_REGEX,BASIC_PUSH_ASM)
