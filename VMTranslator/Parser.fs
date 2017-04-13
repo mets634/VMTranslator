@@ -4,6 +4,8 @@ open System
 open System.Text.RegularExpressions
 open Command
 
+let mutable counter = 0
+
 (*A method to check for regular expression 
 and divide the parameters of expression into list*)
 let (|ParseRegex|_|) regex str =
@@ -21,17 +23,18 @@ let GetSegIndex seg =
     | "this" -> 3
     | "that" -> 4
     | "temp" -> 5
+    | _ -> -1
 
-let Parse line = 
+let Parse (line:String, index:int) = 
     match line with
     | ParseRegex EMPTY_REGEX _ -> MapCommand EMPTY_REGEX
     | ParseRegex PUSH_CONSTANT_REGEX [number; _] -> String.Format(MapCommand PUSH_CONSTANT_REGEX, number)
     | ParseRegex ADD_REGEX _ -> MapCommand ADD_REGEX
     | ParseRegex SUB_REGEX _ -> MapCommand SUB_REGEX
     | ParseRegex NEG_REGEX _ -> MapCommand NEG_REGEX
-    | ParseRegex EQ_REGEX _ -> MapCommand EQ_REGEX
-    | ParseRegex LT_REGEX _ -> MapCommand LT_REGEX
-    | ParseRegex GT_REGEX _ -> MapCommand GT_REGEX
+    | ParseRegex EQ_REGEX _ -> String.Format(MapCommand EQ_REGEX, index)
+    | ParseRegex LT_REGEX _ -> String.Format(MapCommand LT_REGEX, index)
+    | ParseRegex GT_REGEX _ -> String.Format(MapCommand GT_REGEX, index)
     | ParseRegex AND_REGEX _ -> MapCommand AND_REGEX
     | ParseRegex OR_REGEX _ -> MapCommand OR_REGEX
     | ParseRegex POP_REGEX [seg;number;_] -> String.Format(MapCommand POP_REGEX,GetSegIndex seg,number)

@@ -5,7 +5,8 @@ open System
 open Parser
 open System.Text.RegularExpressions
 
-let prefix = @"    @256
+let prefix = @"    
+    @256
     D=A
     @0
     M=D
@@ -37,7 +38,7 @@ let Translate (file:string) =
     let code = 
         noComments.Split ("\n".ToCharArray())  // split file into lines
         |> Array.map (fun line -> line.Trim())  // remove end whitespaces
-        |> Array.map(fun line -> Parser.Parse line)  // parse line
+        |> Array.mapi(fun index line -> (Parser.Parse (line, index)).ToString())  // parse line
         |> Array.filter(fun l -> l.Length > 0)  // remove empty lines
 
     // write commands to .asm file

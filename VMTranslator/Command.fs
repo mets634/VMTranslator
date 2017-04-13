@@ -5,7 +5,7 @@ regular expression of the vm commands
 to their output as Hack assembly*)
 
 [<Literal>]
-let BASIC_PUSH_REGEX = @"^push (local+temp+this+that+argument) (\d+)"
+let BASIC_PUSH_REGEX = @"^push (local|temp|this|that|argument) (\d+)(\s*)$"
 
 [<Literal>]
 let BASIC_PUSH_ASM = @"
@@ -81,18 +81,18 @@ let EQ_ASM = @"
     D=M-D
     @0
     M=M-1
-    @EQ_EQUAL
+    @EQ_EQUAL{0}
     D;JEQ
     @0
     A=M
     M=0
-    @END
+    @EQ_END{0}
     0;JMP
-(EQ_EQUAL)
+(EQ_EQUAL{0})
     @0
     A=M
     M=-1
-(EQ_END)
+(EQ_END{0})
     @0
     M=M+1"
 
@@ -109,18 +109,18 @@ let LT_ASM = @"
     D=M-D
     @0
     M=M-1
-    @LT_LT
+    @LT_LT{0}
     D;JLT
     @0
     A=M
     M=0
-    @LT_END
+    @LT_END{0}
     0;JMP
-(LT_LT)
+(LT_LT{0})
     @0
     A=M
     M=-1
-(LT_END)
+(LT_END{0})
     @0
     M=M+1"
 
@@ -137,18 +137,18 @@ let GT_ASM = @"
     D=M-D
     @0
     M=M-1
-    @GT_GT
+    @GT_GT{0}
     D;JGT
     @0
     A=M
     M=0
-    @GT_END
+    @GT_END{0}
     0;JMP
-(GT_GT)
+(GT_GT{0})
     @0
     A=M
     M=-1
-(GT_END)
+(GT_END{0})
     @0
     M=M+1"
 
@@ -177,7 +177,7 @@ let OR_ASM = @"
     M=M|D"
 
 [<Literal>]
-let POP_REGEX = @"^pop (local+temp+this+that+argument) (\d+)"
+let POP_REGEX = @"^pop (local|temp|this|that|argument) (\d+)(\s*)$"
 
 [<Literal>]
 let POP_ASM = @"
@@ -186,7 +186,7 @@ let POP_ASM = @"
     A=M
     D=M
     @0
-    A=A+1
+    A=M+1
     M=D
 
     @{1}
@@ -194,11 +194,11 @@ let POP_ASM = @"
     @{0}
     D=M+D
     @0
-    A=A+2
+    A=M+2
     M=D
 
     @0
-    A=A+1
+    A=M+1
     D=M
     A=A+1
     A=M
