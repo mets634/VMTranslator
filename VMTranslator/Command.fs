@@ -5,7 +5,7 @@ regular expression of the vm commands
 to their output as Hack assembly*)
 
 [<Literal>]
-let BASIC_PUSH_REGEX = @"^push (local|temp|this|that|argument) (\d+)(\s*)$"
+let BASIC_PUSH_REGEX = @"^push (local|temp|this|that|argument|static) (\d+)(\s*)$"
 
 [<Literal>]
 let BASIC_PUSH_ASM = @"
@@ -20,6 +20,35 @@ let BASIC_PUSH_ASM = @"
     M=D
     @0
     M=M+1"
+
+[<Literal>]
+let BASIC_POP_REGEX = @"^pop (local|temp|this|that|argument|static) (\d+)(\s*)$"
+
+[<Literal>]
+let BASIC_POP_ASM = @"
+    @0
+    M=M-1
+    A=M
+    D=M
+    @0
+    A=A+1
+    M=D
+
+    @{1}
+    D=A
+    @{0}
+    D=M+D
+    @0
+    A=A+2
+    M=D
+
+    @0
+    A=A+1
+    D=M
+    A=A+1
+    A=M
+    M=D
+    "
 
 [<Literal>]
 let PUSH_CONSTANT_REGEX = @"^push constant (\d+)(\s*)$"
@@ -81,18 +110,18 @@ let EQ_ASM = @"
     D=M-D
     @0
     M=M-1
-    @EQ_EQUAL{0}
+    @EQ_EQUAL
     D;JEQ
     @0
     A=M
     M=0
-    @EQ_END{0}
+    @END
     0;JMP
-(EQ_EQUAL{0})
+(EQ_EQUAL)
     @0
     A=M
     M=-1
-(EQ_END{0})
+(EQ_END)
     @0
     M=M+1"
 
@@ -109,18 +138,18 @@ let LT_ASM = @"
     D=M-D
     @0
     M=M-1
-    @LT_LT{0}
+    @LT_LT
     D;JLT
     @0
     A=M
     M=0
-    @LT_END{0}
+    @LT_END
     0;JMP
-(LT_LT{0})
+(LT_LT)
     @0
     A=M
     M=-1
-(LT_END{0})
+(LT_END)
     @0
     M=M+1"
 
@@ -137,18 +166,18 @@ let GT_ASM = @"
     D=M-D
     @0
     M=M-1
-    @GT_GT{0}
+    @GT_GT
     D;JGT
     @0
     A=M
     M=0
-    @GT_END{0}
+    @GT_END
     0;JMP
-(GT_GT{0})
+(GT_GT)
     @0
     A=M
     M=-1
-(GT_END{0})
+(GT_END)
     @0
     M=M+1"
 
@@ -176,35 +205,6 @@ let OR_ASM = @"
     A=A-1
     M=M|D"
 
-[<Literal>]
-let POP_REGEX = @"^pop (local|temp|this|that|argument) (\d+)(\s*)$"
-
-[<Literal>]
-let POP_ASM = @"
-    @0
-    M=M-1
-    A=M
-    D=M
-    @0
-    A=M+1
-    M=D
-
-    @{1}
-    D=A
-    @{0}
-    D=M+D
-    @0
-    A=M+2
-    M=D
-
-    @0
-    A=M+1
-    D=M
-    A=A+1
-    A=M
-    M=D
-    "
-
 
 [<Literal>]
 let EMPTY_REGEX = @"^\s*$"
@@ -220,5 +220,5 @@ let CMD_MAP = Map.empty.
                 Add(GT_REGEX, GT_ASM).
                 Add(AND_REGEX, AND_ASM).
                 Add(OR_REGEX, OR_ASM).
-                Add(POP_REGEX,POP_ASM).
+                Add(BASIC_POP_REGEX,BASIC_POP_ASM).
                 Add(BASIC_PUSH_REGEX,BASIC_PUSH_ASM)
