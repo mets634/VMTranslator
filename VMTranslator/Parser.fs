@@ -22,9 +22,10 @@ let GetSegIndex seg =
     | "that" -> "4"
     | "temp" -> "5"
     | "static" -> "16"
+    | "pointer" -> "3"
     | _ -> seg
 
-let Parse line = 
+let Parse line index = 
     match line with
     | ParseRegex EMPTY_REGEX _ -> MapCommand EMPTY_REGEX
     | ParseRegex PUSH_CONSTANT_REGEX [number; _] -> String.Format(MapCommand PUSH_CONSTANT_REGEX, number)
@@ -38,4 +39,6 @@ let Parse line =
     | ParseRegex OR_REGEX _ -> MapCommand OR_REGEX
     | ParseRegex BASIC_POP_REGEX [seg; number; _] -> String.Format(MapCommand BASIC_POP_REGEX,GetSegIndex seg,number)
     | ParseRegex BASIC_PUSH_REGEX [seg; number; _] -> String.Format(MapCommand BASIC_PUSH_REGEX, GetSegIndex seg, number)
+    | ParseRegex PUSH_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand PUSH_TEMP_STATIC_REGEX,GetSegIndex seg,number)
+    | ParseRegex POP_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand POP_TEMP_STATIC_REGEX,GetSegIndex seg,number)
     | _ -> String.Format("ERROR: {0}", line)
