@@ -25,7 +25,7 @@ let GetSegIndex seg =
     | "pointer" -> "3"
     | _ -> seg
 
-let Parse line index = 
+let Parse line = 
     match line with
     | ParseRegex EMPTY_REGEX _ -> MapCommand EMPTY_REGEX
     | ParseRegex PUSH_CONSTANT_REGEX [number; _] -> String.Format(MapCommand PUSH_CONSTANT_REGEX, number)
