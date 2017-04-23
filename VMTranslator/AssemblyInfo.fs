@@ -8,9 +8,9 @@ open System.Runtime.InteropServices
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [<assembly: AssemblyTitle("VMTranslator")>]
-[<assembly: AssemblyDescription("")>]
+[<assembly: AssemblyDescription("A VM-Hack translator")>]
 [<assembly: AssemblyConfiguration("")>]
-[<assembly: AssemblyCompany("")>]
+[<assembly: AssemblyCompany("Mann Brother")>]
 [<assembly: AssemblyProduct("VMTranslator")>]
 [<assembly: AssemblyCopyright("Copyright ©  2017")>]
 [<assembly: AssemblyTrademark("")>]

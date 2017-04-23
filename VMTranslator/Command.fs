@@ -39,7 +39,8 @@ let BASIC_POP_ASM = @"
     @{0}
     D=M+D
     @0
-    A=A+2
+    A=A+1
+    A=A+1
     M=D
 
     @0
