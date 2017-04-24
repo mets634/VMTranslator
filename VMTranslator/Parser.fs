@@ -25,16 +25,16 @@ let GetSegIndex seg =
     | "pointer" -> "3"
     | _ -> seg
 
-let Parse line index = 
+let Parse line (index:System.Int32) = 
     match line with
     | ParseRegex EMPTY_REGEX _ -> MapCommand EMPTY_REGEX
     | ParseRegex PUSH_CONSTANT_REGEX [number; _] -> String.Format(MapCommand PUSH_CONSTANT_REGEX, number)
     | ParseRegex ADD_REGEX _ -> MapCommand ADD_REGEX
     | ParseRegex SUB_REGEX _ -> MapCommand SUB_REGEX
     | ParseRegex NEG_REGEX _ -> MapCommand NEG_REGEX
-    | ParseRegex EQ_REGEX _ -> MapCommand EQ_REGEX
-    | ParseRegex LT_REGEX _ -> MapCommand LT_REGEX
-    | ParseRegex GT_REGEX _ -> MapCommand GT_REGEX
+    | ParseRegex EQ_REGEX _ -> String.Format(MapCommand EQ_REGEX, index)
+    | ParseRegex LT_REGEX _ -> String.Format(MapCommand LT_REGEX, index)
+    | ParseRegex GT_REGEX _ -> String.Format(MapCommand GT_REGEX, index)
     | ParseRegex AND_REGEX _ -> MapCommand AND_REGEX
     | ParseRegex OR_REGEX _ -> MapCommand OR_REGEX
     | ParseRegex BASIC_POP_REGEX [seg; number; _] -> String.Format(MapCommand BASIC_POP_REGEX,GetSegIndex seg,number)

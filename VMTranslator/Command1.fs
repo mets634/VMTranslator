@@ -1,4 +1,4 @@
-﻿module Command
+﻿module Command1
 
 (*This module creates a map between the 
 regular expression of the vm commands 
@@ -162,18 +162,18 @@ let EQ_ASM = @"
     D=M-D
     @0
     M=M-1
-    @EQ_EQUAL
+    @EQ_EQUAL{0}
     D;JEQ
     @0
     A=M
     M=0
-    @END
+    @EQ_END{0}
     0;JMP
-(EQ_EQUAL)
+(EQ_EQUAL{0})
     @0
     A=M
     M=-1
-(EQ_END)
+(EQ_END{0})
     @0
     M=M+1"
 
@@ -190,18 +190,18 @@ let LT_ASM = @"
     D=M-D
     @0
     M=M-1
-    @LT_LT
+    @LT_LT{0}
     D;JLT
     @0
     A=M
     M=0
-    @LT_END
+    @LT_END{0}
     0;JMP
-(LT_LT)
+(LT_LT{0})
     @0
     A=M
     M=-1
-(LT_END)
+(LT_END{0})
     @0
     M=M+1"
 
@@ -218,18 +218,18 @@ let GT_ASM = @"
     D=M-D
     @0
     M=M-1
-    @GT_GT
+    @GT_GT{0}
     D;JGT
     @0
     A=M
     M=0
-    @GT_END
+    @GT_END{0}
     0;JMP
-(GT_GT)
+(GT_GT{0})
     @0
     A=M
     M=-1
-(GT_END)
+(GT_END{0})
     @0
     M=M+1"
 

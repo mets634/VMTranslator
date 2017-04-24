@@ -22,7 +22,7 @@ let Translate (file:string) =
 
     // write commands to .asm file
     let asm_name = Path.ChangeExtension(file, ".asm")
-    File.WriteAllLines(asm_name, (Array.append [|Command.prefix|] code))
+    File.WriteAllLines(asm_name, (Array.append [|Command1.prefix|] code))
 
 let GetFile (argv:string[]) = 
     match argv.Length with
