@@ -2,7 +2,7 @@
 
 open System
 open System.Text.RegularExpressions
-open Command
+open Command1
 
 (*A method to check for regular expression 
 and divide the parameters of expression into list*)
@@ -25,7 +25,7 @@ let GetSegIndex seg =
     | "pointer" -> "3"
     | _ -> seg
 
-let Parse line = 
+let Parse line index = 
     match line with
     | ParseRegex EMPTY_REGEX _ -> MapCommand EMPTY_REGEX
     | ParseRegex PUSH_CONSTANT_REGEX [number; _] -> String.Format(MapCommand PUSH_CONSTANT_REGEX, number)

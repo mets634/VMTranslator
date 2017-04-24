@@ -65,7 +65,6 @@ let  POP_TEMP_STATIC_REGEX = @"^pop (temp|static|pointer) (\d+)(\s*)$"
 let POP_TEMP_STATIC_ASM = @"
     @0
     M=M-1
-
     @{1}
     D=A
     @{0}
@@ -73,7 +72,6 @@ let POP_TEMP_STATIC_ASM = @"
     @0
     A=M+1
     M=D
-
     @0
     A=M
     D=M
@@ -89,7 +87,6 @@ let BASIC_POP_REGEX = @"^pop (local|this|that|argument) (\d+)(\s*)$"
 let BASIC_POP_ASM = @"
     @0
     M=M-1
-
     @{1}
     D=A
     @{0}
@@ -97,7 +94,6 @@ let BASIC_POP_ASM = @"
     @0
     A=M+1
     M=D
-
     @0
     A=M
     D=M

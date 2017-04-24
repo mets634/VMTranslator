@@ -6,7 +6,6 @@ open Parser
 open System.Text.RegularExpressions
 
 
-
 let Translate (file:string) = 
     let singleLineCommentRegex = @"^//.*$"
     let multiLineCommentRegex = @"/\*(.|[\r\n])*?\*/"
@@ -18,7 +17,7 @@ let Translate (file:string) =
     let code = 
         noComments.Split ("\n".ToCharArray())  // split file into lines
         |> Array.map (fun line -> line.Trim())  // remove end whitespaces
-        |> Array.map(fun line -> Parser.Parse line)  // parse line
+        |> Array.mapi(fun index line -> Parser.Parse line index)  // parse line
         |> Array.filter(fun l -> l.Length > 0)  // remove empty lines
 
     // write commands to .asm file
