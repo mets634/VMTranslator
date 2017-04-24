@@ -51,6 +51,7 @@
     <None Include="App.config" />
     <Compile Include="Command1.fs" />
     <Compile Include="Command2.fs" />
+    <Compile Include="MapCommand.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

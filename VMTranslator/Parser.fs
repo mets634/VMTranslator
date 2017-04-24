@@ -2,7 +2,9 @@
 
 open System
 open System.Text.RegularExpressions
+open MapCommand
 open Command1
+open Command2
 
 (*A method to check for regular expression 
 and divide the parameters of expression into list*)
@@ -41,4 +43,5 @@ let Parse line (index:System.Int32) =
     | ParseRegex BASIC_PUSH_REGEX [seg; number; _] -> String.Format(MapCommand BASIC_PUSH_REGEX, GetSegIndex seg, number)
     | ParseRegex PUSH_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand PUSH_TEMP_STATIC_REGEX,GetSegIndex seg,number)
     | ParseRegex POP_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand POP_TEMP_STATIC_REGEX,GetSegIndex seg,number)
+    | ParseRegex LABEL_REGEX [labelname; _] -> String.Format(MapCommand LABEL_REGEX,labelname,index)
     | _ -> String.Format("ERROR: {0}", line)
