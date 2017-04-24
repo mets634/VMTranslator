@@ -43,5 +43,7 @@ let Parse line (index:System.Int32) =
     | ParseRegex BASIC_PUSH_REGEX [seg; number; _] -> String.Format(MapCommand BASIC_PUSH_REGEX, GetSegIndex seg, number)
     | ParseRegex PUSH_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand PUSH_TEMP_STATIC_REGEX,GetSegIndex seg,number)
     | ParseRegex POP_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand POP_TEMP_STATIC_REGEX,GetSegIndex seg,number)
-    | ParseRegex LABEL_REGEX [labelname; _] -> String.Format(MapCommand LABEL_REGEX,labelname,index)
+    | ParseRegex LABEL_REGEX [labelname; _] -> String.Format(MapCommand LABEL_REGEX, labelname)
+    | ParseRegex GOTO_REGEX [labelname; _] -> String.Format(MapCommand GOTO_REGEX, labelname)
+    | ParseRegex IFGOTO_REGEX [labelname; _] -> String.Format(MapCommand IFGOTO_REGEX, labelname)
     | _ -> String.Format("ERROR: {0}", line)
