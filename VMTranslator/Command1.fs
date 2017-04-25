@@ -36,10 +36,10 @@ let BASIC_PUSH_ASM = @"
     @{1}
     A=D+A
     D=M
-    @0
+    @SP
     A=M
     M=D
-    @0
+    @SP
     M=M+1"
 
 [<Literal>]
@@ -52,10 +52,10 @@ let PUSH_TEMP_STATIC_ASM = @"
     @{1}
     A=D+A
     D=M
-    @0
+    @SP
     A=M
     M=D
-    @0
+    @SP
     M=M+1"
 
 [<Literal>]
@@ -63,16 +63,16 @@ let  POP_TEMP_STATIC_REGEX = @"^pop (temp|static|pointer) (\d+)(\s*)$"
 
 [<Literal>]
 let POP_TEMP_STATIC_ASM = @"
-    @0
+    @SP
     M=M-1
     @{1}
     D=A
     @{0}
     D=A+D
-    @0
+    @SP
     A=M+1
     M=D
-    @0
+    @SP
     A=M
     D=M
     A=A+1
@@ -85,16 +85,16 @@ let BASIC_POP_REGEX = @"^pop (local|this|that|argument) (\d+)(\s*)$"
 
 [<Literal>]
 let BASIC_POP_ASM = @"
-    @0
+    @SP
     M=M-1
     @{1}
     D=A
     @{0}
     D=M+D
-    @0
+    @SP
     A=M+1
     M=D
-    @0
+    @SP
     A=M
     D=M
     A=A+1
@@ -109,10 +109,10 @@ let PUSH_CONSTANT_REGEX = @"^push constant (\d+)(\s*)$"
 let PUSH_CONSTANT_ASM = @"
     @{0}
     D=A
-    @0
+    @SP
     A=M
     M=D
-    @0
+    @SP
     M=M+1"
 
 [<Literal>]
@@ -120,7 +120,7 @@ let ADD_REGEX = @"^add$"
 
 [<Literal>]
 let ADD_ASM = @"
-    @0
+    @SP
     M=M-1
     A=M
     D=M
@@ -132,7 +132,7 @@ let SUB_REGEX = @"^sub$"
 
 [<Literal>]
 let SUB_ASM = @"
-    @0
+    @SP
     M=M-1
     A=M
     D=M
@@ -144,7 +144,7 @@ let NEG_REGEX = @"^neg$"
 
 [<Literal>]
 let NEG_ASM = @"
-    @0
+    @SP
     A=M-1
     M=-M"
 
@@ -154,23 +154,23 @@ let EQ_REGEX = @"^eq$"
 
 [<Literal>]
 let EQ_ASM = @"
-    @0
+    @SP
     M=M-1
     A=M
     D=M
     A=A-1
     D=M-D
-    @0
+    @SP
     M=M-1
     @EQ_EQUAL{0}
     D;JEQ
-    @0
+    @SP
     A=M
     M=0
     @EQ_END{0}
     0;JMP
 (EQ_EQUAL{0})
-    @0
+    @SP
     A=M
     M=-1
 (EQ_END{0})
@@ -188,21 +188,21 @@ let LT_ASM = @"
     D=M
     A=A-1
     D=M-D
-    @0
+    @SP
     M=M-1
     @LT_LT{0}
     D;JLT
-    @0
+    @SP
     A=M
     M=0
     @LT_END{0}
     0;JMP
 (LT_LT{0})
-    @0
+    @SP
     A=M
     M=-1
 (LT_END{0})
-    @0
+    @SP
     M=M+1"
 
 [<Literal>]
@@ -210,27 +210,27 @@ let GT_REGEX = @"^gt$"
 
 [<Literal>]
 let GT_ASM = @"
-    @0
+    @SP
     M=M-1
     A=M
     D=M
     A=A-1
     D=M-D
-    @0
+    @SP
     M=M-1
     @GT_GT{0}
     D;JGT
-    @0
+    @SP
     A=M
     M=0
     @GT_END{0}
     0;JMP
 (GT_GT{0})
-    @0
+    @SP
     A=M
     M=-1
 (GT_END{0})
-    @0
+    @SP
     M=M+1"
 
 [<Literal>]
@@ -238,7 +238,7 @@ let AND_REGEX = @"^and$"
 
 [<Literal>]
 let AND_ASM = @"
-    @0
+    @SP
     M=M-1
     A=M
     D=M
