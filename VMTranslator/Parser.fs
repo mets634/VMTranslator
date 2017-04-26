@@ -44,7 +44,7 @@ let Parse line filename (index:System.Int32) =
     | ParseRegex PUSH_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand PUSH_TEMP_STATIC_REGEX,GetSegIndex seg,number)
     | ParseRegex POP_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand POP_TEMP_STATIC_REGEX,GetSegIndex seg,number)
     | ParseRegex LABEL_REGEX [labelname; _] -> String.Format(MapCommand LABEL_REGEX,labelname,index)
-    | ParseRegex FUNCTION_REGEX [funcname; numVar; _] -> String.Format(MapCommand FUNCTION_REGEX,funcname,filename,numVar)
-    | ParseRegex CALL_REGEX [funcname; numVar; _] -> String.Format(MapCommand CALL_REGEX,funcname,filename,numVar)
+    | ParseRegex FUNCTION_REGEX [fileAndFunc; numVar; _] -> String.Format(MapCommand FUNCTION_REGEX,fileAndFunc,numVar)
+    | ParseRegex CALL_REGEX [fileAndFunc; numVar; _] -> String.Format(MapCommand CALL_REGEX,fileAndFunc,numVar)
     | ParseRegex RETURN_REGEX _ -> MapCommand RETURN_REGEX
     | _ -> String.Format("ERROR: {0}", line)

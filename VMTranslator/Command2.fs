@@ -5,37 +5,37 @@ let LABEL_REGEX = @"^label (.+)(\s*)$"
 
 [<Literal>]
 let LABEL_ASM = @"
-(LABEL{0}{1})"
+(LABEL {0} {1})"
 
 
 [<Literal>]
 let FUNCTION_REGEX = @"^function (.+)(\s*) (\d+)(\s*)$"
 
-//first-function's name,second-filename,third-num of locals
+//first-filename and func's name,second-num of locals
 [<Literal>]
 let FUNCTION_ASM = @"
-    @{0}{1}END
+    @{0} END
     0;jump
-(FUNC{0}{1}START)
-    @{2}
+(FUNC {0} START)
+    @{1}
     D=A
-(FUNC{0}{1}BOOT)
+(FUNC {0} BOOT)
     @SP
     A=M
     M=0
     D=D-1
     @SP
     M=M+1
-    @FUNC{0}{1}BOOT
+    @FUNC {0} BOOT
     0;JEQ"
 
 [<Literal>]
 let CALL_REGEX = @"^call (.+)(\s*) (\d)(\s*)$"
 
-//first-function's name,second-filename,third-num of variables
+//first-filename and func's name,second-num of variables
 [<Literal>]
 let CALL_ASM = @"
-    @FUNC{0}{1}BACK
+    @FUNC {0} BACK
     D=A
     @SP
     A=M
@@ -76,7 +76,7 @@ let CALL_ASM = @"
     M=M+1
 
     @SP
-    D=M-{2}
+    D=M-{1}
     @5
     D=D-A
     @ARG
@@ -88,9 +88,9 @@ let CALL_ASM = @"
     
     @0
     D=A
-    @FUNC{0}{1}START
+    @FUNC {0} START
     0;JEQ
-(FUNC{0}{1}BACK)
+(FUNC {0} BACK)
     "
 
 [<Literal>]
