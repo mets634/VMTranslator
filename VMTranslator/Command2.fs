@@ -5,41 +5,44 @@ let LABEL_REGEX = @"^label (.+)(\s*)$"
 
 [<Literal>]
 let LABEL_ASM = @"
-({0}{1})"
+(LABEL{0}{1})"
 
 
 [<Literal>]
 let FUNCTION_REGEX = @"^function (.+)(\s*) (\d+)(\s*)$"
 
+//first-function's name,second-filename,third-num of locals
 [<Literal>]
 let FUNCTION_ASM = @"
     @{0}{1}END
     0;jump
-({0}{1}START)
-    @0
+(FUNC{0}{1}START)
+    @{2}
     D=A
-({0}{1}BOOT)
+(FUNC{0}{1}BOOT)
     @SP
     A=M
     M=0
     D=D-1
     @SP
     M=M+1
-    @{0}{1}BOOT
+    @FUNC{0}{1}BOOT
     0;JEQ"
 
 [<Literal>]
 let CALL_REGEX = @"^call (.+)(\s*) (\d)(\s*)$"
 
+//first-function's name,second-filename,third-num of variables
 [<Literal>]
 let CALL_ASM = @"
-    @{0}{1}BACK
+    @FUNC{0}{1}BACK
     D=A
     @SP
     A=M
     M=D
     @SP
     M=M+1
+
     @LCL 
     D=A
     @SP
@@ -47,6 +50,7 @@ let CALL_ASM = @"
     M=D
     @SP
     M=M+1
+   
     @ARG 
     D=A
     @SP
@@ -54,6 +58,7 @@ let CALL_ASM = @"
     M=D
     @SP
     M=M+1
+
     @THIS 
     D=A
     @SP
@@ -61,6 +66,7 @@ let CALL_ASM = @"
     M=D
     @SP
     M=M+1
+
     @THAT 
     D=A
     @SP
@@ -71,7 +77,8 @@ let CALL_ASM = @"
 
     @SP
     D=M-{2}
-    D=D-5
+    @5
+    D=D-A
     @ARG
     M=D
     @SP
@@ -79,8 +86,11 @@ let CALL_ASM = @"
     @LCL
     M=D
     
-    @{0}{1}START
-    0;jump
+    @0
+    D=A
+    @FUNC{0}{1}START
+    0;JEQ
+(FUNC{0}{1}BACK)
     "
 
 [<Literal>]
@@ -88,4 +98,59 @@ let RETURN_REGEX = @"^return$"
 
 [<Literal>]
 let RETURN_ASM = @"
+   @5
+   D=A
+   @LCL
+   A=M
+   A=A-D
+   D=M
+   @ARG
+   A=M
+   M=D
+   
+   @SP
+   A=M-1
+   D=M
+   @ARG
+   A=M-1
+   M=D
+
+   D=A+1
+   @SP
+   M=D
+
+   @LCL
+   A=M-1
+   @THAT
+   M=D
+
+   @2
+   D=A
+   @LCL
+   A=M-D
+   D=M
+   @THIS
+   M=D
+
+   @3
+   D=A
+   @LCL
+   A=M-D
+   D=M
+   @ARG
+   M=D
+
+   @4
+   D=A
+   @LCL
+   A=M-D
+   D=M
+   @LCL
+   M=D
+
+   @SP
+   D=A
+   A=M
+   A=M
+   0;jEQ
 "

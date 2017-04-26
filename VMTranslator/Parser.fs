@@ -27,7 +27,7 @@ let GetSegIndex seg =
     | "pointer" -> "3"
     | _ -> seg
 
-let Parse line (index:System.Int32) = 
+let Parse line filename (index:System.Int32) = 
     match line with
     | ParseRegex EMPTY_REGEX _ -> MapCommand EMPTY_REGEX
     | ParseRegex PUSH_CONSTANT_REGEX [number; _] -> String.Format(MapCommand PUSH_CONSTANT_REGEX, number)
@@ -44,4 +44,7 @@ let Parse line (index:System.Int32) =
     | ParseRegex PUSH_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand PUSH_TEMP_STATIC_REGEX,GetSegIndex seg,number)
     | ParseRegex POP_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand POP_TEMP_STATIC_REGEX,GetSegIndex seg,number)
     | ParseRegex LABEL_REGEX [labelname; _] -> String.Format(MapCommand LABEL_REGEX,labelname,index)
+    | ParseRegex FUNCTION_REGEX [funcname; numVar; _] -> String.Format(MapCommand FUNCTION_REGEX,funcname,filename,numVar)
+    | ParseRegex CALL_REGEX [funcname; numVar; _] -> String.Format(MapCommand CALL_REGEX,funcname,filename,numVar)
+    | ParseRegex RETURN_REGEX _ -> MapCommand RETURN_REGEX
     | _ -> String.Format("ERROR: {0}", line)
