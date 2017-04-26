@@ -43,6 +43,8 @@ let Parse line filename (index:System.Int32) =
     | ParseRegex BASIC_PUSH_REGEX [seg; number; _] -> String.Format(MapCommand BASIC_PUSH_REGEX, GetSegIndex seg, number)
     | ParseRegex PUSH_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand PUSH_TEMP_STATIC_REGEX,GetSegIndex seg,number)
     | ParseRegex POP_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand POP_TEMP_STATIC_REGEX,GetSegIndex seg,number)
+    | ParseRegex GOTO_REGEX [labelname; _] -> String.Format(MapCommand GOTO_REGEX, labelname)
+    | ParseRegex IFGOTO_REGEX [labelname; _] -> String.Format(MapCommand IFGOTO_REGEX, labelname)
     | ParseRegex LABEL_REGEX [labelname; _] -> String.Format(MapCommand LABEL_REGEX,labelname,index)
     | ParseRegex FUNCTION_REGEX [fileAndFunc; numVar; _] -> String.Format(MapCommand FUNCTION_REGEX,fileAndFunc,numVar)
     | ParseRegex CALL_REGEX [fileAndFunc; numVar; _] -> String.Format(MapCommand CALL_REGEX,fileAndFunc,numVar)

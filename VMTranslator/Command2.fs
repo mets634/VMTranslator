@@ -1,12 +1,19 @@
 ﻿module Command2
 
+(*A continuation of thee Command1 module*)
+
 [<Literal>]
 let LABEL_REGEX = @"^label (.+)(\s*)$"
 
 [<Literal>]
 let LABEL_ASM = @"
-(LABEL {0} {1})"
+({0})"
 
+[<Literal>]
+let GOTO_REGEX = @"^goto (.+)(\s*)$"
+
+[<Literal>]
+let GOTO_ASM = @""
 
 [<Literal>]
 let FUNCTION_REGEX = @"^function (.+)(\s*) (\d+)(\s*)$"

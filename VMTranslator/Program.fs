@@ -7,7 +7,7 @@ open System.Text.RegularExpressions
 
 
 let Translate (file:string) = 
-    let singleLineCommentRegex = @"^//.*$"
+    let singleLineCommentRegex = @"//.*"
     let multiLineCommentRegex = @"/\*(.|[\r\n])*?\*/"
 
     // remove comments

@@ -19,6 +19,8 @@ let CMD_MAP = Map.empty.
                 Add(POP_TEMP_STATIC_REGEX,POP_TEMP_STATIC_ASM).
                 Add(PUSH_TEMP_STATIC_REGEX,PUSH_TEMP_STATIC_ASM).
                 Add(LABEL_REGEX,LABEL_ASM).
+                Add(GOTO_REGEX, GOTO_ASM).
+                Add(IFGOTO_REGEX, IFGOTO_ASM).
                 Add(FUNCTION_REGEX,FUNCTION_ASM).
                 Add(CALL_REGEX,CALL_ASM).
                 Add(RETURN_REGEX,RETURN_ASM)
