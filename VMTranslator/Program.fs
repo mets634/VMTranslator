@@ -34,13 +34,23 @@ let main argv =
         let dir_name = GetDirectoryName argv
         let dir = new DirectoryInfo(dir_name)
 
-        let asm_name = Path.ChangeExtension(dir_name + "Assembly", ".asm")
+        // add assembly prefix
+        let asm_name = Path.ChangeExtension(dir_name + @"\Assembly", ".asm")
         File.WriteAllLines(asm_name, [|Command1.prefix|])
 
+        try
+            // add vm prefix
+            let sys_lines = dir.GetFiles() |> Array.find (fun f -> f.Name = "Sys.vm") |> Translate
+            File.AppendAllLines(asm_name, sys_lines)
+
+        with _ as ex -> () // ignore exception
+
+        // add actual code
         dir.GetFiles() 
-        |> Array.filter (fun f -> f.Extension = ".vm") 
-        |> Array.map (fun f -> Translate f) 
-        |> Array.ForEach(fun arr -> arr.ForEach(fun line -> File.AppendAllText(line,asm_name)))
+        |> Array.filter (fun f -> f.Extension = ".vm" && f.Name <> "Sys.vm") // only vm files not including sys.vm
+        |> Array.map (fun f -> Translate f) // translate each file
+        |> Array.map (fun lines -> File.AppendAllLines(asm_name, lines)) // add to file
+        |> ignore
         
 
     with _ as ex -> Console.WriteLine("ERROR:\n{0}", (ex.Message.ToString()))
