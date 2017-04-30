@@ -38,7 +38,7 @@ let FUNCTION_REGEX = @"^function (.+)(\s*) (\d+)(\s*)$"
 [<Literal>]
 let FUNCTION_ASM = @"
     @{0} END
-    0;jump
+    0;JMP
 (FUNC {0} START)
     @{1}
     D=A
@@ -50,7 +50,7 @@ let FUNCTION_ASM = @"
     @SP
     M=M+1
     @FUNC {0} BOOT
-    0;JEQ"
+    0;JNE"
 
 [<Literal>]
 let CALL_REGEX = @"^call (.+)(\s*) (\d)(\s*)$"
@@ -109,10 +109,8 @@ let CALL_ASM = @"
     @LCL
     M=D
     
-    @0
-    D=A
     @FUNC {0} START
-    0;JEQ
+    0;JMP
 (FUNC {0} BACK)
     "
 
@@ -172,8 +170,7 @@ let RETURN_ASM = @"
    M=D
 
    @SP
-   D=A
    A=M
    A=M
-   0;jEQ
+   0;JMP
 "

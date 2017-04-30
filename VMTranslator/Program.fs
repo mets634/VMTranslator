@@ -38,9 +38,9 @@ let main argv =
         File.WriteAllLines(asm_name, [|Command1.prefix|])
 
         dir.GetFiles() 
-        |> Array.filter (fun f -> f.Extension = ".vm") 
-        |> Array.map (fun f -> Translate f) 
-        |> Array.ForEach(fun arr -> arr.ForEach(fun line -> File.AppendAllText(line,asm_name)))
+        |> Array.filter (fun f -> f.Extension = ".vm")   //taking only the vm files
+        |> Array.map (fun f -> Translate f)    //take each file and translate to asm
+        |> Array.ForEach(fun arr -> arr.ForEach(fun line -> File.AppendAllText(line,asm_name)))  //writing the asm code to the file
         
 
     with _ as ex -> Console.WriteLine("ERROR:\n{0}", (ex.Message.ToString()))
