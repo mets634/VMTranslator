@@ -47,6 +47,6 @@ let Parse line filename (index:System.Int32) =
     | ParseRegex IFGOTO_REGEX [labelname; _] -> String.Format(MapCommand IFGOTO_REGEX, labelname)
     | ParseRegex LABEL_REGEX [labelname; _] -> String.Format(MapCommand LABEL_REGEX,labelname,index)
     | ParseRegex FUNCTION_REGEX [fileAndFunc; numVar; _] -> String.Format(MapCommand FUNCTION_REGEX,fileAndFunc,numVar)
-    | ParseRegex CALL_REGEX [fileAndFunc; numVar; _] -> String.Format(MapCommand CALL_REGEX,fileAndFunc,numVar)
+    | ParseRegex CALL_REGEX [fileAndFunc; numVar; _] -> String.Format(MapCommand CALL_REGEX,fileAndFunc,numVar,index)
     | ParseRegex RETURN_REGEX _ -> MapCommand RETURN_REGEX
     | _ -> String.Format("ERROR: {0}", line)

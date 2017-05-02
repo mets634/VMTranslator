@@ -24,7 +24,21 @@ let prefix = @"    @256
     @3010
     D=A
     @4
-    M=D"
+    M=D
+    //intiate all the pointers (THIS,THAT....)
+
+    @END OF PROGRAM
+    D=A
+    @SP
+    A=M
+    M=D
+    @SP
+    M=M+1
+    
+    @FUNC Sys.init START
+    0;JMP
+    //jumping to the main function and setting the return value to exit the program
+    "
 
 [<Literal>]
 let BASIC_PUSH_REGEX = @"^push (local|this|that|argument) (\d+)(\s*)$"

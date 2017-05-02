@@ -37,11 +37,13 @@ let main argv =
         let asm_name = Path.ChangeExtension(dir_name + "Assembly", ".asm")
         File.WriteAllLines(asm_name, [|Command1.prefix|])
 
+        // add actual code
         dir.GetFiles() 
-        |> Array.filter (fun f -> f.Extension = ".vm")   //taking only the vm files
-        |> Array.map (fun f -> Translate f)    //take each file and translate to asm
-        |> Array.ForEach(fun arr -> arr.ForEach(fun line -> File.AppendAllText(line,asm_name)))  //writing the asm code to the file
-        
+        |> Array.map (fun f -> Translate f) // translate each file
+        |> Array.map (fun lines -> File.AppendAllLines(asm_name, lines)) // add to file
+        |> ignore
+
+        File.AppendAllLines(asm_name,[|"(END OF PROGRAM)"|])
 
     with _ as ex -> Console.WriteLine("ERROR:\n{0}", (ex.Message.ToString()))
 
