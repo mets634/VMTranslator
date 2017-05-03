@@ -14,7 +14,8 @@ let GOTO_REGEX = @"^goto (.+)(\s*)$"
 
 [<Literal>]
 let GOTO_ASM = @"
-    @0
+ //goto {0}
+    @SP
     D=A
     @LABEL {0}
     0;JMP"
@@ -24,7 +25,8 @@ let IFGOTO_REGEX = @"^if-goto (.+)(\s*)$"
 
 [<Literal>]
 let IFGOTO_ASM = @"
-    @0
+ //if M[SP] == true goto {0}
+    @SP
     M=M-1
     A=M
     D=M
@@ -59,6 +61,7 @@ let CALL_REGEX = @"^call (.+) (\d)(\s*)$"
 //first-filename and func's name,second-num of variables,third - index to make the return address uniqe
 [<Literal>]
 let CALL_ASM = @"
+ //call {0}
     @FUNC {0} BACK {2}
     D=A
     @SP
@@ -66,43 +69,43 @@ let CALL_ASM = @"
     M=D
     @SP
     M=M+1
-    //push the RA
+ //push the RA
 
     @LCL 
-    D=A
+    D=M
     @SP
     A=M
     M=D
     @SP
     M=M+1
-    //save the previous LCL
+ //save the previous LCL
    
     @ARG 
-    D=A
+    D=M
     @SP
     A=M
     M=D
     @SP
     M=M+1
-    //save the previous ARG
+ //save the previous ARG
 
     @THIS 
-    D=A
+    D=M
     @SP
     A=M
     M=D
     @SP
     M=M+1
-    //save the previous THIS
+ //save the previous THIS
 
     @THAT 
-    D=A
+    D=M
     @SP
     A=M
     M=D
     @SP
     M=M+1
-    //save the previous THAT
+ //save the previous THAT
 
     @SP
     D=M-{1}
@@ -114,7 +117,7 @@ let CALL_ASM = @"
     D=M
     @LCL
     M=D
-    //set the new LCL to SP and the new ARG to the pushed args
+ //set the new LCL to SP and the new ARG to the pushed args
     
     @FUNC {0} START
     0;JMP
@@ -126,6 +129,7 @@ let RETURN_REGEX = @"^return$"
 
 [<Literal>]
 let RETURN_ASM = @"
+ //return 
    @5
    D=A
    @LCL
@@ -133,28 +137,29 @@ let RETURN_ASM = @"
    A=A-D
    D=M
    @ARG
-   A=M
+   A=M+1
    M=D
-   //set the RA after all the function's args
+ //set the RA after all the function's args
    
    @SP
    A=M-1
    D=M
    @ARG
-   A=M-1
+   A=M
    M=D
-   //take the return value and put it at the new end of the stack (after we delete all the function's args)
+ //take the return value and put it at the new end of the stack (after we delete all the function's args)
 
    D=A+1
    @SP
    M=D
-   //put the SP back aboce the function's args
+ //put the SP back aboce the function's args
 
    @LCL
-   D=M-1
+   A=M-1
+   D=M
    @THAT
    M=D
-   //restore the THAT pointer
+ //restore the THAT pointer
 
    @2
    D=A
@@ -163,7 +168,7 @@ let RETURN_ASM = @"
    D=M
    @THIS
    M=D
-   //restore the THIS pointer
+ //restore the THIS pointer
 
    @3
    D=A
@@ -172,7 +177,7 @@ let RETURN_ASM = @"
    D=M
    @ARG
    M=D
-   //restore the ARG pointer
+ //restore the ARG pointer
 
    @4
    D=A
@@ -181,10 +186,10 @@ let RETURN_ASM = @"
    D=M
    @LCL
    M=D
-   //restore the LCL pointer
+ //restore the LCL pointer
 
    @SP
    A=M
    A=M
    0;JMP
-   //jump back to the RA"
+ //jump back to the RA"

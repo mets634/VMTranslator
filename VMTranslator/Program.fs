@@ -34,11 +34,12 @@ let main argv =
         let dir_name = GetDirectoryName argv
         let dir = new DirectoryInfo(dir_name)
 
-        let asm_name = Path.ChangeExtension(dir_name + "Assembly", ".asm")
+        let asm_name = Path.ChangeExtension(dir_name + "/FibonacciElement", ".asm")
         File.WriteAllLines(asm_name, [|Command1.prefix|])
 
         // add actual code
         dir.GetFiles() 
+        |> Array.filter(fun f -> f.Extension.Equals(".vm"))
         |> Array.map (fun f -> Translate f) // translate each file
         |> Array.map (fun lines -> File.AppendAllLines(asm_name, lines)) // add to file
         |> ignore

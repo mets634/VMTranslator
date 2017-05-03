@@ -25,7 +25,7 @@ let prefix = @"    @256
     D=A
     @4
     M=D
-    //intiate all the pointers (THIS,THAT....)
+ //intiate all the pointers (THIS,THAT....)
 
     @END OF PROGRAM
     D=A
@@ -37,7 +37,7 @@ let prefix = @"    @256
     
     @FUNC Sys.init START
     0;JMP
-    //jumping to the main function and setting the return value to exit the program
+ //jumping to the main function and setting the return value to exit the program
     "
 
 [<Literal>]
@@ -45,6 +45,7 @@ let BASIC_PUSH_REGEX = @"^push (local|this|that|argument) (\d+)(\s*)$"
 
 [<Literal>]
 let BASIC_PUSH_ASM = @"
+ //push to the stack the {1} variable in {0}
     @{0}
     D=M
     @{1}
@@ -54,13 +55,15 @@ let BASIC_PUSH_ASM = @"
     A=M
     M=D
     @SP
-    M=M+1"
+    M=M+1
+    "
 
 [<Literal>]
 let PUSH_TEMP_STATIC_REGEX = @"^push (temp|static|pointer) (\d+)(\s*)$" 
 
 [<Literal>]
 let PUSH_TEMP_STATIC_ASM = @"
+ //push to the stack the {1} in {0}
     @{0}
     D=A
     @{1}
@@ -70,13 +73,15 @@ let PUSH_TEMP_STATIC_ASM = @"
     A=M
     M=D
     @SP
-    M=M+1"
+    M=M+1
+    "
 
 [<Literal>]
 let  POP_TEMP_STATIC_REGEX = @"^pop (temp|static|pointer) (\d+)(\s*)$"
 
 [<Literal>]
 let POP_TEMP_STATIC_ASM = @"
+ //pop from the stack and put in M[{0}+{1}]
     @SP
     M=M-1
     @{1}
@@ -99,6 +104,7 @@ let BASIC_POP_REGEX = @"^pop (local|this|that|argument) (\d+)(\s*)$"
 
 [<Literal>]
 let BASIC_POP_ASM = @"
+ //pop from the stack and put in M[{0}+{1}]
     @SP
     M=M-1
     @{1}
@@ -121,31 +127,36 @@ let PUSH_CONSTANT_REGEX = @"^push constant (\d+)(\s*)$"
 
 [<Literal>]
 let PUSH_CONSTANT_ASM = @"
+ //push {0} to the stack
     @{0}
     D=A
     @SP
     A=M
     M=D
     @SP
-    M=M+1"
+    M=M+1
+    "
 
 [<Literal>]
 let ADD_REGEX = @"^add$"
 
 [<Literal>]
 let ADD_ASM = @"
+ //pop 2 values from the stack and push their addition
     @SP
     M=M-1
     A=M
     D=M
     A=A-1
-    M=M+D"
+    M=M+D
+    "
 
 [<Literal>]
 let SUB_REGEX = @"^sub$"
 
 [<Literal>]
 let SUB_ASM = @"
+ //pop 2 values and push their subtraction
     @SP
     M=M-1
     A=M
@@ -158,6 +169,7 @@ let NEG_REGEX = @"^neg$"
 
 [<Literal>]
 let NEG_ASM = @"
+ //pop and push the negative value
     @SP
     A=M-1
     M=-M"
@@ -168,6 +180,7 @@ let EQ_REGEX = @"^eq$"
 
 [<Literal>]
 let EQ_ASM = @"
+ //pop 2 values push true if they are equal,else false
     @SP
     M=M-1
     A=M
@@ -196,7 +209,8 @@ let LT_REGEX = @"^lt$"
 
 [<Literal>]
 let LT_ASM = @"
-    @0
+ //pop 2 values push true if the second is smaller
+    @SP
     M=M-1
     A=M
     D=M
@@ -224,6 +238,7 @@ let GT_REGEX = @"^gt$"
 
 [<Literal>]
 let GT_ASM = @"
+ //pop 2 values push true if the second is bigger
     @SP
     M=M-1
     A=M
@@ -252,6 +267,7 @@ let AND_REGEX = @"^and$"
 
 [<Literal>]
 let AND_ASM = @"
+ //pop 2 values and push the & value
     @SP
     M=M-1
     A=M
@@ -264,6 +280,7 @@ let OR_REGEX = @"^or$"
 
 [<Literal>]
 let OR_ASM = @"
+ //pop 2 values and push the | value
     @0
     M=M-1
     A=M
