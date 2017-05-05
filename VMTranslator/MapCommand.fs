@@ -14,6 +14,7 @@ let CMD_MAP = Map.empty.
                 Add(GT_REGEX, GT_ASM).
                 Add(AND_REGEX, AND_ASM).
                 Add(OR_REGEX, OR_ASM).
+                Add(NOT_REGEX,NOT_ASM).
                 Add(BASIC_POP_REGEX,BASIC_POP_ASM).
                 Add(BASIC_PUSH_REGEX,BASIC_PUSH_ASM).
                 Add(POP_TEMP_STATIC_REGEX,POP_TEMP_STATIC_ASM).

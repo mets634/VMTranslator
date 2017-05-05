@@ -288,6 +288,16 @@ let OR_ASM = @"
     A=A-1
     M=M|D"
 
+[<Literal>]
+let NOT_REGEX = @"^not$"
+
+[<Literal>]
+let NOT_ASM = @"
+ //pop and push the not value
+    @SP
+    A=M-1
+    M=!M"
+
 
 [<Literal>]
 let EMPTY_REGEX = @"^\s*$"

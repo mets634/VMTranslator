@@ -39,6 +39,7 @@ let Parse line filename (index:System.Int32) =
     | ParseRegex GT_REGEX _ -> String.Format(MapCommand GT_REGEX, index)
     | ParseRegex AND_REGEX _ -> MapCommand AND_REGEX
     | ParseRegex OR_REGEX _ -> MapCommand OR_REGEX
+    | ParseRegex NOT_REGEX _ -> MapCommand NOT_REGEX
     | ParseRegex BASIC_POP_REGEX [seg; number; _] -> String.Format(MapCommand BASIC_POP_REGEX,GetSegIndex seg,number)
     | ParseRegex BASIC_PUSH_REGEX [seg; number; _] -> String.Format(MapCommand BASIC_PUSH_REGEX, GetSegIndex seg, number)
     | ParseRegex PUSH_TEMP_STATIC_REGEX [seg; number; _] -> String.Format(MapCommand PUSH_TEMP_STATIC_REGEX,GetSegIndex seg,number)
