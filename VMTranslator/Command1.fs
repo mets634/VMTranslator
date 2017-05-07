@@ -37,8 +37,7 @@ let prefix = @"    @256
     
     @FUNC Sys.init START
     0;JMP
- //jumping to the main function and setting the return value to exit the program
-    "
+ //jumping to the main function and setting the return value to exit the program"
 
 [<Literal>]
 let BASIC_PUSH_REGEX = @"^push (local|this|that|argument) (\d+)(\s*)$"

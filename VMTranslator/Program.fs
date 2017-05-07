@@ -34,8 +34,12 @@ let main argv =
         let dir_name = GetDirectoryName argv
         let dir = new DirectoryInfo(dir_name)
 
-        let asm_name = Path.ChangeExtension(dir_name + "/FibonacciElement", ".asm")
-        File.WriteAllLines(asm_name, [|Command1.prefix|])
+        let asm_name = Path.ChangeExtension(dir.FullName + "\\" + dir.Name, ".asm")
+
+        let sysVM = dir.GetFiles() 
+                    |> Array.filter(fun f -> f.Name.Equals("Sys.vm"))
+
+        if sysVM.Length > 0 then File.WriteAllLines(asm_name, [|Command1.prefix|]) else File.WriteAllLines(asm_name, [|""|])
 
         // add actual code
         dir.GetFiles() 
