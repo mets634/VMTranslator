@@ -108,7 +108,9 @@ let CALL_ASM = @"
  //save the previous THAT
 
     @SP
-    D=M-{1}
+    D=M
+    @{1}
+    D=D-A
     @5
     D=D-A
     @ARG
