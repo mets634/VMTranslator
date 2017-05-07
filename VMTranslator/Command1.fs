@@ -35,6 +35,42 @@ let prefix = @"    @256
     @SP
     M=M+1
     
+    @LCL 
+    D=M
+    @SP
+    A=M
+    M=D
+    @SP
+    M=M+1
+ //save the previous LCL
+   
+    @ARG 
+    D=M
+    @SP
+    A=M
+    M=D
+    @SP
+    M=M+1
+ //save the previous ARG
+
+    @THIS 
+    D=M
+    @SP
+    A=M
+    M=D
+    @SP
+    M=M+1
+ //save the previous THIS
+
+    @THAT 
+    D=M
+    @SP
+    A=M
+    M=D
+    @SP
+    M=M+1
+ //save the previous THAT
+
     @FUNC Sys.init START
     0;JMP
  //jumping to the main function and setting the return value to exit the program"
